@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEDAI.AKU // Personal Preloved & Curated Archive</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        alabaster: '#FAF9F6',
+                        charcoal: '#111111',
+                        stoneborder: '#E5E5E0',
+                        duitnow: '#ED2C67',
+                        fpxblue: '#00529B'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #111111;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D1C7;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #111111;
+        }
+        .mono-num {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .card-hover {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -15px rgba(17, 17, 17, 0.08);
+        }
+        @keyframes pulseSubtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.45; }
+        }
+        .pulse-dot {
+            animation: pulseSubtle 2s infinite ease-in-out;
+        }
+        /* Stamp effect for sold items */
+        .sold-stamp {
+            transform: rotate(-8deg);
+            letter-spacing: 0.15em;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-charcoal selection:text-white">
+
+    <!-- ==================== TOP TRUST & TRANSPARENCY BAR ==================== -->
+    <div class="bg-charcoal text-white text-xs border-b border-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
+                <span class="inline-flex items-center gap-1.5 font-medium text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+                    VERIFIED PERSONAL SELLER
+                </span>
+                <span class="hidden md:inline text-neutral-600">|</span>
+                <span class="text-neutral-300 hidden sm:inline">
+                    <i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Respon pantas (&lt; 10 minit)
+                </span>
+                <span class="text-neutral-600 hidden sm:inline">|</span>
+                <span class="text-neutral-300">
+                    <i class="fa-solid fa-truck-fast text-sky-400 mr-1"></i> Pos J&amp;T / PosLaju Setiap Hari &amp; COD: <strong id="topBarCodLocation" class="text-white">Rawang / Selayang / KL</strong>
+                </span>
+            </div>
+            <div class="flex items-center gap-3 ml-auto">
+                <button onclick="openSellerStudio()" class="inline-flex items-center gap-1.5 text-[11px] mono-num bg-neutral-800 hover:bg-neutral-700 text-neutral-200 px-2.5 py-1 rounded-md border border-neutral-700 transition">
+                    <i class="fa-solid fa-sliders text-emerald-400"></i>
+                    <span>Seller Studio (Admin)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN NAVIGATION HEADER ==================== -->
+    <header class="sticky top-0 z-30 bg-alabaster/90 backdrop-blur-md border-b border-stoneborder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- Brand Identity -->
+            <div class="flex items-center gap-3">
+                <a href="#" onclick="resetFilters(); return false;" class="group flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-charcoal text-white flex items-center justify-center font-mono font-bold text-lg tracking-tighter shadow-sm group-hover:bg-neutral-800 transition">
+                        KA//
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 id="headerStoreName" class="font-extrabold text-lg sm:text-xl tracking-tight text-charcoal">GARASI.AKU</h1>
+                            <span class="text-[10px] mono-num uppercase px-2 py-0.5 bg-emerald-100 text-emerald-900 font-semibold rounded-full border border-emerald-300">100% Legit</span>
+                        </div>
+                        <p id="headerStoreTagline" class="text-xs text-neutral-500 line-clamp-1">Barang Preloved Peribadi • Kasut, Baju, Gajet &amp; Parts Motor</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Search (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-4">
+                <div class="relative w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 text-sm"></i>
+                    <input 
+                        type="text" 
+                        id="searchInputDesktop" 
+                        oninput="syncSearch(this.value)"
+                        placeholder="Cari kasut, iPhone, sport rim, monitor..." 
+                        class="w-full pl-10 pr-9 py-2.5 bg-white border border-stoneborder rounded-xl text-sm focus:outline-none focus:border-charcoal transition"
+                    >
+                    <button id="clearSearchBtnDesktop" onclick="syncSearch('')" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-charcoal">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions: Direct WhatsApp & Shopping Bag -->
+            <div class="flex items-center gap-2.5">
+                <button onclick="openGeneralWhatsApp()" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-stoneborder bg-white hover:border-charcoal text-xs font-semibold text-charcoal transition">
+                    <i class="fa-brands fa-whatsapp text-emerald-600 text-base"></i>
+                    <span>Tanya Seller</span>
+                </button>
+
+                <button onclick="toggleCartDrawer(true)" class="relative inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-charcoal hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold transition shadow-sm">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Beg Belian</span>
+                    <span id="cartCountBadge" class="mono-num bg-emerald-400 text-charcoal font-bold text-xs px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== EDITORIAL HERO & SELLER CREDIBILITY BANNER ==================== -->
+    <section class="border-b border-stoneborder bg-gradient-to-b from-white to-alabaster">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Left Editorial Intro -->
+                <div class="lg:col-span-7 space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-stoneborder text-xs font-medium text-neutral-700">
+                        <span class="mono-num font-bold text-charcoal">UPGRADE DARI FB MARKETPLACE</span>
+                        <span>•</span>
+                        <span>Tak perlu tunggu "PM Tepi"</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-charcoal leading-tight">
+                        Koleksi Barang Peribadi &amp; Preloved Pilihan. <span class="underline decoration-emerald-400 decoration-4 underline-offset-4">Jujur, Telus &amp; Terus Beli.</span>
+                    </h2>
+                    <p class="text-sm sm:text-base text-neutral-600 max-w-2xl leading-relaxed">
+                        Semua barang di sini adalah milik peribadi (bukan kedai bundle pukal). Setiap kondisi, calar halus, dan sebab jual dinyatakan dengan jujur. Boleh terus <strong>Lock &amp; Bayar melalui FPX / DuitNow QR</strong> atau set masa untuk <strong>COD</strong>.
+                    </p>
+                </div>
+
+                <!-- Right Seller Trust Metrics Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white border border-stoneborder rounded-2xl p-5 shadow-sm">
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-stoneborder">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-emerald-950 text-emerald-300 flex items-center justify-center font-bold text-lg border-2 border-emerald-400">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <h3 id="sellerProfileName" class="font-bold text-sm text-charcoal">Aiman (Owner Koleksi)</h3>
+                                        <i class="fa-solid fa-circle-check text-sky-500 text-xs" title="Verified Owner"></i>
+                                    </div>
+                                    <p class="text-xs text-neutral-500">Dulu aktif di FB Marketplace &amp; Carousell</p>
+                                </div>
+                            </div>
+                            <span class="mono-num text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                ★ 5.0 / 5.0
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="p-2.5 rounded-xl bg-alabaster border border-stoneborder">
+                                <div id="statAvailableCount" class="mono-num font-bold text-lg text-charcoal">8</div>
+                                <div class="text-[11px] text-neutral-500 font-medium">Stok Available</div>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-alabaster border border-stoneborder">
+                                <div id="statSoldCount" class="mono-num font-bold text-lg text-emerald-700">2</div>
+                                <div class="text-[11px] text-neutral-500 font-medium">Rekod Terjual</div>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-alabaster border border-stoneborder">
+                                <div class="mono-num font-bold text-lg text-charcoal">24 Jam</div>
+                                <div class="text-[11px] text-neutral-500 font-medium">Jaminan Pos</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-stoneborder flex items-center justify-between text-xs text-neutral-600">
+                            <span class="inline-flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                                FPX Online Banking / DuitNow QR / COD
+                            </span>
+                            <button onclick="openSellerStudio()" class="font-semibold text-charcoal underline hover:text-emerald-700">
+                                + Tambah Barang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FILTER, SEARCH & ARCHIVE CONTROLS ==================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4 w-full">
+        <!-- Mobile Search Bar -->
+        <div class="md:hidden mb-4">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 text-sm"></i>
+                <input 
+                    type="text" 
+                    id="searchInputMobile" 
+                    oninput="syncSearch(this.value)"
+                    placeholder="Cari kasut, iPhone, sport rim, monitor..." 
+                    class="w-full pl-10 pr-9 py-2.5 bg-white border border-stoneborder rounded-xl text-sm focus:outline-none focus:border-charcoal"
+                >
+            </div>
+        </div>
+
+        <!-- Category Tabs + Controls Row -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stoneborder">
+            <!-- Category Pills -->
+            <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
+                <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- Right Filter Controls: Show Sold Toggle & Sort Dropdown -->
+            <div class="flex flex-wrap items-center justify-between sm:justify-end gap-3">
+                <!-- Show/Hide Sold Archive Toggle (Builds Trust) -->
+                <label class="inline-flex items-center gap-2.5 cursor-pointer bg-white px-3.5 py-2 rounded-xl border border-stoneborder select-none hover:border-neutral-400 transition">
+                    <input type="checkbox" id="showSoldToggle" checked onchange="renderCatalog()" class="sr-only peer">
+                    <div class="w-9 h-5 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-charcoal"></div>
+                    <span class="text-xs font-semibold text-charcoal">Tunjuk Rekod "SOLD"</span>
+                </label>
+
+                <!-- Sort Selector -->
+                <div class="relative">
+                    <select id="sortSelect" onchange="renderCatalog()" class="appearance-none bg-white border border-stoneborder rounded-xl pl-3.5 pr-9 py-2 text-xs font-semibold text-charcoal focus:outline-none focus:border-charcoal cursor-pointer">
+                        <option value="featured">Susunan: Pilihan Utama</option>
+                        <option value="price-asc">Harga: Rendah ke Tinggi</option>
+                        <option value="price-desc">Harga: Tinggi ke Rendah</option>
+                        <option value="condition-desc">Condition: Paling Tiptop</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-neutral-500 pointer-events-none"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Filter Summary Bar -->
+        <div class="flex items-center justify-between py-3 text-xs text-neutral-500">
+            <div id="catalogResultCount" class="mono-num font-medium">Memaparkan semua barang...</div>
+            <div class="flex items-center gap-2">
+                <span class="hidden sm:inline">Semua harga dalam</span>
+                <span class="mono-num font-bold text-charcoal bg-neutral-200/70 px-2 py-0.5 rounded">MYR (RM)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PRODUCT CATALOG GRID ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyCatalogState" class="hidden bg-white border border-stoneborder rounded-2xl p-12 text-center my-6">
+            <div class="w-14 h-14 rounded-2xl bg-neutral-100 text-neutral-500 flex items-center justify-center mx-auto mb-4 text-xl">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+            <h3 class="text-lg font-bold text-charcoal mb-1">Tiada barang dijumpai</h3>
+            <p class="text-sm text-neutral-500 max-w-md mx-auto mb-5">Cuba tukar kata kunci carian, pilih kategori lain, atau aktifkan semula butang 'Tunjuk Rekod SOLD'.</p>
+            <button onclick="resetFilters()" class="px-4 py-2.5 bg-charcoal text-white text-xs font-semibold rounded-xl hover:bg-neutral-800 transition">
+                Reset Semua Filter
+            </button>
+        </div>
+    </main>
+
+    <!-- ==================== HOW IT WORKS / BUYER GUARANTEE SECTION ==================== -->
+    <section class="bg-white border-t border-stoneborder py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="mono-num text-xs uppercase tracking-wider text-emerald-700 font-bold">CARA BELI TANPA RAGU-RAGU</span>
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-charcoal mt-1">Kenapa Beli Terus Kat Website Ni Lagi Senang?</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-neutral-500 mt-2 md:mt-0">Tiada lagi masalah kena sidai atau gambar kabur macam kat grup FB.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-5 rounded-2xl bg-alabaster border border-stoneborder">
+                    <div class="w-10 h-10 rounded-xl bg-charcoal text-white flex items-center justify-center font-mono font-bold text-sm mb-4">01</div>
+                    <h4 class="font-bold text-base text-charcoal mb-1.5">Condition &amp; Defect Dinyatakan Jujur</h4>
+                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                        Setiap barang ada rating kondisi (contoh: <span class="mono-num font-semibold">9.0/10</span>) beserta bahagian <em>"Jujur Cakap"</em> supaya kau tahu kondisi sebenar sebelum bayar.
+                    </p>
+                </div>
+                <div class="p-5 rounded-2xl bg-alabaster border border-stoneborder">
+                    <div class="w-10 h-10 rounded-xl bg-charcoal text-white flex items-center justify-center font-mono font-bold text-sm mb-4">02</div>
+                    <h4 class="font-bold text-base text-charcoal mb-1.5">Terus Lock Guna FPX / DuitNow QR</h4>
+                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                        Siapa cepat dia dapat. Boleh terus pilih bayaran Online Banking FPX (ToyyibPay/Billplz), imbas DuitNow QR, atau Lock COD terus ke WhatsApp.
+                    </p>
+                </div>
+                <div class="p-5 rounded-2xl bg-alabaster border border-stoneborder">
+                    <div class="w-10 h-10 rounded-xl bg-charcoal text-white flex items-center justify-center font-mono font-bold text-sm mb-4">03</div>
+                    <h4 class="font-bold text-base text-charcoal mb-1.5">Pos Siap Bubble Wrap Tebal / COD</h4>
+                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                        Barang elektronik &amp; parts motor dibalut bubble wrap berlapis. Nombor tracking J&amp;T / PosLaju dihantar terus ke WhatsApp lepas pos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-charcoal text-neutral-400 text-xs border-t border-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-mono font-bold text-white text-sm">GARASI.AKU //</span>
+                <span>Personal Curated Preloved Storefront • Malaysia (RM)</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openSellerStudio()" class="hover:text-white underline transition">Buka Seller Studio</button>
+                <span>•</span>
+                <button onclick="openGeneralWhatsApp()" class="hover:text-emerald-400 transition">WhatsApp Direct</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== 1. PRODUCT INSPECTION MODAL ==================== -->
+    <div id="inspectionModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-white border border-stoneborder rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl my-auto max-h-[92vh] flex flex-col">
+            <!-- Modal Top Bar -->
+            <div class="px-5 py-4 border-b border-stoneborder flex items-center justify-between bg-alabaster">
+                <div class="flex items-center gap-2.5">
+                    <span id="modalSku" class="mono-num text-xs font-bold px-2.5 py-1 rounded-md bg-neutral-200 text-charcoal">#SKU</span>
+                    <span id="modalCategoryBadge" class="text-xs font-semibold text-neutral-600">Kategori</span>
+                </div>
+                <button onclick="closeInspectionModal()" class="w-8 h-8 rounded-full bg-white border border-stoneborder flex items-center justify-center text-neutral-500 hover:text-charcoal hover:border-charcoal transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-5 sm:p-7 overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Left Image & Condition Meter -->
+                <div class="md:col-span-5 flex flex-col gap-4">
+                    <div class="relative rounded-2xl overflow-hidden bg-neutral-100 border border-stoneborder aspect-square flex items-center justify-center">
+                        <img id="modalImage" src="" alt="Product" class="w-full h-full object-cover">
+                        <div id="modalStatusStamp" class="hidden absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <span class="sold-stamp border-4 border-white text-white font-mono font-extrabold text-2xl px-5 py-1.5 rounded-lg">SOLD OUT</span>
+                        </div>
+                    </div>
+
+                    <!-- Condition Meter Card -->
+                    <div class="p-4 rounded-2xl bg-alabaster border border-stoneborder">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-neutral-500">Rating Kondisi Barang</span>
+                            <span id="modalConditionScore" class="mono-num text-sm font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-md">9.0 / 10</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-neutral-200 rounded-full overflow-hidden">
+                            <div id="modalConditionBar" class="h-full bg-emerald-600 rounded-full" style="width: 90%"></div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap gap-1.5" id="modalSpecPills">
+                            <!-- Spec tags -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Honest Details & Action -->
+                <div class="md:col-span-7 flex flex-col justify-between space-y-5">
+                    <div class="space-y-4">
+                        <div>
+                            <h2 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-charcoal leading-snug">Nama Barang</h2>
+                            <div class="mt-2 flex items-baseline gap-3">
+                                <span id="modalPrice" class="mono-num text-2xl sm:text-3xl font-extrabold text-charcoal">RM 0</span>
+                                <span id="modalRetailPrice" class="mono-num text-sm text-neutral-400 line-through">Harga Baru: RM 0</span>
+                                <span id="modalSavingsBadge" class="mono-num text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">Jimat RM 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Jujur Cakap (Honest Condition Notes) -->
+                        <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1.5">
+                            <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-amber-900">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                <span>Jujur Cakap (Condition &amp; Defect Sebenar)</span>
+                            </div>
+                            <p id="modalHonestNote" class="text-xs sm:text-sm text-neutral-800 leading-relaxed"></p>
+                        </div>
+
+                        <!-- Sebab Jual & Apa Yang Dapat -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="p-3.5 rounded-xl bg-alabaster border border-stoneborder">
+                                <div class="text-[11px] font-bold uppercase text-neutral-400 mb-1">
+                                    <i class="fa-solid fa-comment-dots mr-1 text-neutral-500"></i> Sebab Jual (RFS)
+                                </div>
+                                <p id="modalRfs" class="text-xs sm:text-sm font-medium text-charcoal"></p>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-alabaster border border-stoneborder">
+                                <div class="text-[11px] font-bold uppercase text-neutral-400 mb-1">
+                                    <i class="fa-solid fa-box mr-1 text-neutral-500"></i> Apa Yang Kau Dapat
+                                </div>
+                                <p id="modalIncluded" class="text-xs sm:text-sm font-medium text-charcoal"></p>
+                            </div>
+                        </div>
+
+                        <!-- Postage & COD Info -->
+                        <div class="p-3.5 rounded-xl border border-stoneborder bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                            <div class="flex items-center gap-2 text-neutral-700">
+                                <i class="fa-solid fa-truck text-charcoal"></i>
+                                <span><strong>Pos:</strong> RM10 (SM) / RM18 (SS)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-neutral-700">
+                                <i class="fa-solid fa-handshake text-emerald-600"></i>
+                                <span><strong>COD (Percuma):</strong> <span id="modalCodArea">Rawang / Selayang / KL</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div id="modalActionArea" class="pt-4 border-t border-stoneborder flex flex-col sm:flex-row gap-2.5">
+                        <!-- Dynamically populated based on AVAILABLE vs SOLD -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 2. SLIDE-OVER CHECKOUT & PAYMENT REDIRECT DRAWER ==================== -->
+    <div id="cartDrawerBackdrop" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-lg bg-white shadow-2xl border-l border-stoneborder flex flex-col justify-between">
+                <!-- Drawer Header -->
+                <div class="p-5 border-b border-stoneborder bg-alabaster flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-charcoal text-white flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-base text-charcoal">Checkout &amp; Payment Redirect</h3>
+                            <p class="text-[11px] text-neutral-500">Pilih Pos atau COD, kemudian teruskan bayaran</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-full bg-white border border-stoneborder flex items-center justify-center text-neutral-500 hover:text-charcoal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Scrollable Content -->
+                <div class="p-5 overflow-y-auto flex-1 space-y-6">
+                    <!-- Selected Items List -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2.5">
+                            <h4 class="text-xs font-extrabold uppercase tracking-wider text-neutral-500">Barang Dalam Beg</h4>
+                            <button onclick="clearCart()" id="clearCartBtn" class="text-[11px] text-rose-600 hover:underline font-semibold">Kosongkan</button>
+                        </div>
+                        <div id="cartItemsList" class="space-y-2.5">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Checkout Form Wrapper (Hidden when bag is empty) -->
+                    <div id="checkoutFormSection" class="space-y-6">
+                        <!-- Step 1: Delivery Method -->
+                        <div class="space-y-2.5">
+                            <label class="block text-xs font-extrabold uppercase tracking-wider text-neutral-500">1. Pilih Kaedah Penghantaran</label>
+                            <div class="grid grid-cols-1 gap-2">
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-stoneborder cursor-pointer hover:border-charcoal transition has-[:checked]:border-charcoal has-[:checked]:bg-neutral-50">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="deliveryMethod" value="pos_sm" checked onchange="updateCheckoutTotals()" class="accent-charcoal">
+                                        <div>
+                                            <div class="text-xs font-bold text-charcoal">Pos J&amp;T / PosLaju (Semenanjung)</div>
+                                            <div class="text-[11px] text-neutral-500">Siap bubble wrap tebal + nombor tracking</div>
+                                        </div>
+                                    </div>
+                                    <span class="mono-num text-xs font-bold text-charcoal">+ RM 10</span>
+                                </label>
+
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-stoneborder cursor-pointer hover:border-charcoal transition has-[:checked]:border-charcoal has-[:checked]:bg-neutral-50">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="deliveryMethod" value="pos_ss" onchange="updateCheckoutTotals()" class="accent-charcoal">
+                                        <div>
+                                            <div class="text-xs font-bold text-charcoal">Pos J&amp;T / PosLaju (Sabah &amp; Sarawak)</div>
+                                            <div class="text-[11px] text-neutral-500">Pos udara selamat + kotak berlapis</div>
+                                        </div>
+                                    </div>
+                                    <span class="mono-num text-xs font-bold text-charcoal">+ RM 18</span>
+                                </label>
+
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-stoneborder cursor-pointer hover:border-charcoal transition has-[:checked]:border-charcoal has-[:checked]:bg-neutral-50">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="deliveryMethod" value="cod" onchange="updateCheckoutTotals()" class="accent-charcoal">
+                                        <div>
+                                            <div class="text-xs font-bold text-charcoal">Meetup / Self-Collect (COD)</div>
+                                            <div class="text-[11px] text-neutral-500">Kawasan: <span id="drawerCodArea" class="font-semibold">Rawang / Selayang / KL</span></div>
+                                        </div>
+                                    </div>
+                                    <span class="mono-num text-xs font-bold text-emerald-700">PERCUMA</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Buyer Details -->
+                        <div class="space-y-3">
+                            <label class="block text-xs font-extrabold uppercase tracking-wider text-neutral-500">2. Maklumat Pembeli</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div>
+                                    <label class="text-[11px] font-semibold text-neutral-600 block mb-1">Nama Penuh *</label>
+                                    <input type="text" id="buyerName" placeholder="Cth: Hakimi Roslan" class="w-full px-3 py-2 text-xs rounded-xl border border-stoneborder focus:outline-none focus:border-charcoal">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] font-semibold text-neutral-600 block mb-1">No. WhatsApp *</label>
+                                    <input type="tel" id="buyerPhone" placeholder="Cth: 0123456789" class="w-full px-3 py-2 text-xs rounded-xl border border-stoneborder focus:outline-none focus:border-charcoal mono-num">
+                                </div>
+                            </div>
+                            <div id="buyerAddressContainer">
+                                <label id="buyerAddressLabel" class="text-[11px] font-semibold text-neutral-600 block mb-1">Alamat Penuh Pos (Beserta Poskod) *</label>
+                                <textarea id="buyerAddress" rows="2" placeholder="No. Rumah, Jalan, Taman, Poskod, Negeri..." class="w-full px-3 py-2 text-xs rounded-xl border border-stoneborder focus:outline-none focus:border-charcoal"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Payment Redirect Selector -->
+                        <div class="space-y-2.5">
+                            <label class="block text-xs font-extrabold uppercase tracking-wider text-neutral-500">3. Pilih Cara Bayaran (Redirect)</label>
+
+                            <!-- Option A: FPX Online Banking -->
+                            <div class="p-3.5 rounded-2xl border-2 border-charcoal bg-alabaster space-y-2.5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded bg-fpxblue text-white font-mono font-bold text-[10px]">FPX</span>
+                                        <span class="text-xs font-bold text-charcoal">Online Banking (ToyyibPay / FPX)</span>
+                                    </div>
+                                    <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Instant Lock</span>
+                                </div>
+                                <select id="fpxBankSelect" class="w-full px-3 py-2 text-xs rounded-xl border border-stoneborder bg-white font-medium focus:outline-none focus:border-charcoal">
+                                    <option value="Maybank2u">Maybank2u (Malayan Banking)</option>
+                                    <option value="CIMB Clicks">CIMB Clicks</option>
+                                    <option value="Bank Islam">Bank Islam Online</option>
+                                    <option value="RHB Now">RHB Now</option>
+                                    <option value="Public Bank">Public Bank (PBe)</option>
+                                    <option value="Hong Leong Connect">Hong Leong Connect</option>
+                                    <option value="BSN Online">MyBSN</option>
+                                </select>
+                                <button onclick="initiatePaymentRedirect('fpx')" class="w-full py-2.5 px-4 rounded-xl bg-charcoal hover:bg-neutral-800 text-white text-xs font-bold flex items-center justify-center gap-2 transition shadow-sm">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span>Teruskan ke FPX Payment Gateway</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <!-- Option B: DuitNow QR / Instant Transfer -->
+                            <button onclick="initiatePaymentRedirect('duitnow')" class="w-full p-3.5 rounded-2xl border border-stoneborder hover:border-duitnow bg-white flex items-center justify-between group transition text-left">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-duitnow text-white font-mono font-extrabold text-[10px] flex items-center justify-center shrink-0">
+                                        QR
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-charcoal group-hover:text-duitnow transition">DuitNow QR / Instant Transfer</div>
+                                        <div class="text-[11px] text-neutral-500">Scan QR atau salin No. Akaun &amp; hantar resit</div>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-neutral-400 group-hover:text-duitnow"></i>
+                            </button>
+
+                            <!-- Option C: Lock via WhatsApp Direct -->
+                            <button onclick="initiatePaymentRedirect('whatsapp')" class="w-full p-3.5 rounded-2xl border border-stoneborder hover:border-emerald-600 bg-white flex items-center justify-between group transition text-left">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white text-base flex items-center justify-center shrink-0">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-charcoal group-hover:text-emerald-700 transition">Lock Barang &amp; Deal di WhatsApp</div>
+                                        <div class="text-[11px] text-neutral-500">Redirect terus dengan senarai penuh order</div>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-neutral-400 group-hover:text-emerald-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawer Footer Summary -->
+                <div class="p-5 border-t border-stoneborder bg-alabaster space-y-2">
+                    <div class="flex justify-between text-xs text-neutral-600">
+                        <span>Subtotal Barang</span>
+                        <span id="summarySubtotal" class="mono-num font-semibold">RM 0</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-neutral-600">
+                        <span>Caj Penghantaran</span>
+                        <span id="summaryShipping" class="mono-num font-semibold">RM 10</span>
+                    </div>
+                    <div class="flex justify-between items-baseline pt-2 border-t border-stoneborder">
+                        <span class="text-sm font-extrabold text-charcoal">Jumlah Perlu Dibayar</span>
+                        <span id="summaryTotal" class="mono-num text-xl font-extrabold text-charcoal">RM 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 3. FPX / TOYYIBPAY PAYMENT GATEWAY REDIRECT MODAL ==================== -->
+    <div id="fpxGatewayModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div class="bg-white border border-stoneborder rounded-3xl max-w-md w-full overflow-hidden shadow-2xl">
+            <!-- Top FPX Header -->
+            <div class="bg-fpxblue text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="px-2.5 py-1 rounded bg-white text-fpxblue font-mono font-extrabold text-xs">FPX</div>
+                    <div>
+                        <h4 class="font-bold text-sm">ToyyibPay / FPX Standard Gateway</h4>
+                        <p class="text-[11px] text-sky-200">PayNet Real-Time Online Banking Redirect</p>
+                    </div>
+                </div>
+                <button onclick="closePaymentModals()" class="text-sky-200 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Gateway Body -->
+            <div class="p-6 space-y-5">
+                <!-- Loading State -->
+                <div id="fpxConnectingState" class="py-6 text-center space-y-3">
+                    <div class="w-12 h-12 rounded-full border-4 border-sky-100 border-t-fpxblue animate-spin mx-auto"></div>
+                    <div class="text-sm font-bold text-charcoal">Menghubungkan ke <span id="fpxLoadingBankName">Maybank2u</span>...</div>
+                    <p class="text-xs text-neutral-500">Menjana Bil Transaksi Rasmi &amp; Kunci Stok...</p>
+                </div>
+
+                <!-- Ready Bill State -->
+                <div id="fpxReadyState" class="hidden space-y-5">
+                    <div class="p-4 rounded-2xl bg-alabaster border border-stoneborder space-y-2.5 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-neutral-500">No. Rujukan Bil:</span>
+                            <span id="fpxBillCode" class="mono-num font-bold text-charcoal">TP-882910</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-500">Bank Pilihan:</span>
+                            <span id="fpxSelectedBankDisplay" class="font-bold text-fpxblue">Maybank2u</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-500">Pembeli:</span>
+                            <span id="fpxBuyerDisplay" class="font-semibold text-charcoal">-</span>
+                        </div>
+                        <div class="pt-2 border-t border-stoneborder flex justify-between items-baseline">
+                            <span class="font-bold text-charcoal">Jumlah Transaksi:</span>
+                            <span id="fpxAmountDisplay" class="mono-num text-lg font-extrabold text-emerald-700">RM 0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- External Link Notice if configured -->
+                    <div id="customGatewayBox" class="hidden p-3 rounded-xl bg-sky-50 border border-sky-200 text-xs text-sky-900">
+                        <div class="font-bold mb-1"><i class="fa-solid fa-link mr-1"></i> Pautan ToyyibPay/Payment Seller Aktif:</div>
+                        <a id="customGatewayAnchor" href="#" target="_blank" rel="noopener noreferrer" class="underline font-mono break-all text-fpxblue hover:text-charcoal">Buka Pautan Payment Gateway Sebenar</a>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <button onclick="completeFpxTransaction()" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Sahkan Bayaran &amp; Hantar Resit ke WhatsApp</span>
+                        </button>
+                        <button onclick="closePaymentModals()" class="w-full py-2.5 text-xs font-semibold text-neutral-500 hover:text-charcoal">
+                            Kembali ke Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 4. DUITNOW QR INSTANT TRANSFER MODAL ==================== -->
+    <div id="duitnowModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div class="bg-white border border-stoneborder rounded-3xl max-w-md w-full overflow-hidden shadow-2xl">
+            <!-- DuitNow Pink Header -->
+            <div class="bg-duitnow text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="px-2 py-0.5 rounded bg-white text-duitnow font-mono font-extrabold text-xs">DuitNow</div>
+                    <div>
+                        <h4 class="font-bold text-sm">DuitNow QR &amp; Instant Transfer</h4>
+                        <p class="text-[11px] text-pink-100">Imbas guna mana-mana aplikasi Bank / eWallet</p>
+                    </div>
+                </div>
+                <button onclick="closePaymentModals()" class="text-pink-100 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <!-- QR Display Stand -->
+                <div class="bg-alabaster border-2 border-duitnow/30 rounded-2xl p-4 text-center space-y-3">
+                    <div class="inline-block p-3 bg-white rounded-2xl border border-stoneborder shadow-sm">
+                        <!-- Stylized Crisp SVG DuitNow QR Code -->
+                        <svg class="w-40 h-40 mx-auto" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="120" height="120" rx="8" fill="white"/>
+                            <!-- Top Left Finder -->
+                            <rect x="10" y="10" width="28" height="28" rx="4" stroke="#111111" stroke-width="5"/>
+                            <rect x="18" y="18" width="12" height="12" rx="2" fill="#ED2C67"/>
+                            <!-- Top Right Finder -->
+                            <rect x="82" y="10" width="28" height="28" rx="4" stroke="#111111" stroke-width="5"/>
+                            <rect x="90" y="18" width="12" height="12" rx="2" fill="#ED2C67"/>
+                            <!-- Bottom Left Finder -->
+                            <rect x="10" y="82" width="28" height="28" rx="4" stroke="#111111" stroke-width="5"/>
+                            <rect x="18" y="90" width="12" height="12" rx="2" fill="#ED2C67"/>
+                            <!-- Data Matrix Pattern -->
+                            <path d="M46 12H54V20H46V12ZM62 12H74V20H62V12ZM46 26H60V34H46V26ZM66 26H74V40H66V26ZM12 46H26V54H12V46ZM32 46H44V60H32V46ZM82 46H94V54H82V46ZM100 46H108V62H100V46ZM12 62H22V74H12V62ZM28 66H42V74H28V66ZM46 82H58V94H46V82ZM64 82H76V90H64V82ZM82 78H96V86H82V78ZM82 94H92V108H82V94ZM98 92H108V108H98V92ZM48 98H72V108H48V98Z" fill="#111111"/>
+                            <!-- Center DuitNow Badge -->
+                            <rect x="46" y="46" width="28" height="28" rx="6" fill="#ED2C67"/>
+                            <text x="60" y="64" text-anchor="middle" fill="white" font-family="monospace" font-weight="bold" font-size="11">QR</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs text-neutral-500">Jumlah Tepat Perlu Ditransfer:</div>
+                        <div id="duitnowAmountDisplay" class="mono-num text-2xl font-extrabold text-charcoal">RM 0.00</div>
+                    </div>
+                </div>
+
+                <!-- Manual Bank Account Copy Box -->
+                <div class="p-3.5 rounded-2xl bg-white border border-stoneborder flex items-center justify-between">
+                    <div>
+                        <div id="duitnowBankName" class="text-[11px] font-bold uppercase text-neutral-400">MAYBANK BERHAD</div>
+                        <div id="duitnowAccNumber" class="mono-num text-sm font-extrabold text-charcoal">1621 0668 4412</div>
+                        <div id="duitnowAccHolder" class="text-xs text-neutral-500">Aiman Koleksi Peribadi</div>
+                    </div>
+                    <button onclick="copyBankAccount()" class="px-3 py-2 rounded-xl bg-alabaster hover:bg-charcoal hover:text-white border border-stoneborder text-xs font-bold transition flex items-center gap-1.5">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Salin No</span>
+                    </button>
+                </div>
+
+                <!-- Action -->
+                <button onclick="completeDuitNowTransfer()" class="w-full py-3 px-4 rounded-xl bg-duitnow hover:bg-pink-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>Dah Transfer — Hantar Resit kat WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 5. SELLER STUDIO (ADMIN MODE MODAL) ==================== -->
+    <div id="sellerStudioModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-white border border-stoneborder rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl my-auto max-h-[92vh] flex flex-col">
+            <!-- Studio Header -->
+            <div class="px-6 py-4 bg-charcoal text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-sliders text-emerald-400"></i>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">Seller Studio — Urus Barang &amp; Payment</h3>
+                        <p class="text-[11px] text-neutral-400">Tambah barang random baru, tukar status SOLD, atau set No. WhatsApp &amp; ToyyibPay</p>
+                    </div>
+                </div>
+                <button onclick="closeSellerStudio()" class="w-8 h-8 rounded-full bg-neutral-800 text-neutral-300 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Studio Tabs -->
+            <div class="px-6 pt-3 bg-alabaster border-b border-stoneborder flex gap-4 text-xs font-bold overflow-x-auto">
+                <button onclick="switchStudioTab('inventory')" id="tabBtnInventory" class="pb-3 border-b-2 border-charcoal text-charcoal whitespace-nowrap">
+                    1. Urus Stok (<span id="studioTotalItemsCount">0</span>)
+                </button>
+                <button onclick="switchStudioTab('add')" id="tabBtnAdd" class="pb-3 border-b-2 border-transparent text-neutral-500 hover:text-charcoal whitespace-nowrap">
+                    2. + Tambah Barang Baru
+                </button>
+                <button onclick="switchStudioTab('settings')" id="tabBtnSettings" class="pb-3 border-b-2 border-transparent text-neutral-500 hover:text-charcoal whitespace-nowrap">
+                    3. Tetapan Payment &amp; WhatsApp
+                </button>
+            </div>
+
+            <!-- Studio Content Body -->
+            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+                <!-- TAB 1: MANAGE INVENTORY -->
+                <div id="studioTabInventory" class="space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 bg-alabaster p-3.5 rounded-2xl border border-stoneborder">
+                        <p class="text-xs text-neutral-600">
+                            Tip: Bila barang dah laku, klik butang <strong>"Tanda SOLD"</strong>. Barang yang bertanda SOLD akan kekal sebagai rekod untuk kuatkan kepercayaan pembeli baru.
+                        </p>
+                        <div class="flex gap-2">
+                            <button onclick="exportInventoryJson()" class="px-3 py-1.5 rounded-lg bg-white border border-stoneborder text-xs font-bold hover:border-charcoal">
+                                <i class="fa-solid fa-code mr-1"></i> Salin JSON
+                            </button>
+                            <button onclick="resetDemoInventory()" class="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold hover:bg-rose-100">
+                                Reset Data Asal
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="studioInventoryList" class="divide-y divide-stoneborder border border-stoneborder rounded-2xl overflow-hidden bg-white">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 2: ADD NEW RANDOM ITEM -->
+                <div id="studioTabAdd" class="hidden space-y-4">
+                    <form onsubmit="handleAddNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Nama Barang *</label>
+                            <input type="text" id="newItemTitle" required placeholder="Cth: Helmet ARC Ritz / RTX 3060 / Kasut Vans" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Kategori *</label>
+                            <select id="newItemCategory" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder bg-white">
+                                <option value="moto">Parts Motor</option>
+                                <option value="tech">Tech &amp; PC</option>
+                                <option value="wear">Kasut &amp; Baju</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Harga Jual Preloved (RM) *</label>
+                            <input type="number" id="newItemPrice" required placeholder="Cth: 250" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Harga Asal Kedai (RM) *</label>
+                            <input type="number" id="newItemRetail" required placeholder="Cth: 450" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Condition Score (1.0 - 10.0) *</label>
+                            <input type="number" step="0.5" min="1" max="10" id="newItemCondition" value="9.0" required class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">URL Gambar (Atau Biarkan Kosong Untuk Auto)</label>
+                            <input type="url" id="newItemImage" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-charcoal mb-1">Jujur Cakap (Detail Condition &amp; Calar/Defect) *</label>
+                            <textarea id="newItemHonest" rows="2" required placeholder="Cth: Barang berfungsi 100% cemerlang, cuma ada calar manja sikit kat bahagian bawah..." class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Sebab Jual (RFS) *</label>
+                            <input type="text" id="newItemRfs" required placeholder="Cth: Clear bilik / Dah upgrade" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Apa Yang Dapat Sekali *</label>
+                            <input type="text" id="newItemIncluded" required placeholder="Cth: Fullset kotak + resit asal" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div class="sm:col-span-2 pt-2">
+                            <button type="submit" class="w-full py-3 rounded-xl bg-charcoal hover:bg-neutral-800 text-white font-bold text-xs sm:text-sm transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Masukkan Barang ke Dalam Kedai
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 3: STORE & PAYMENT REDIRECT SETTINGS -->
+                <div id="studioTabSettings" class="hidden space-y-4">
+                    <form onsubmit="saveSellerSettings(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Nama Kedai / Brand</label>
+                            <input type="text" id="settingStoreName" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Nama Seller</label>
+                            <input type="text" id="settingSellerName" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">No. WhatsApp Seller (Format: 601...)</label>
+                            <input type="text" id="settingWhatsapp" placeholder="60123456789" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Kawasan COD / Self-Collect</label>
+                            <input type="text" id="settingCodLocation" placeholder="Rawang / Selayang / KL" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">Nama Bank (Untuk DuitNow / Transfer)</label>
+                            <input type="text" id="settingBankName" placeholder="MAYBANK BERHAD" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-charcoal mb-1">No. Akaun Bank</label>
+                            <input type="text" id="settingBankAccount" placeholder="1621 0668 4412" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-charcoal mb-1">Link Payment Gateway Luaran (ToyyibPay / Billplz / Stripe - Pilihan)</label>
+                            <input type="url" id="settingGatewayUrl" placeholder="https://toyyibpay.com/Kod-Kedai-Anda (Biarkan kosong untuk guna FPX Simulator terbina)" class="w-full px-3.5 py-2 text-xs rounded-xl border border-stoneborder mono-num">
+                        </div>
+                        <div class="sm:col-span-2 pt-2">
+                            <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Tetapan Kedai &amp; Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ==================== APPLICATION LOGIC ==================== -->
+    <script>
+        // --- 1. DEFAULT CURATED INVENTORY (MOTOR PARTS, TECH/PC, KICKS & APPAREL) ---
+        const DEFAULT_PRODUCTS = [
+            {
+                id: 'MOTO-01',
+                title: 'RCB SP522 Gold Sport Rim Set (1.40 / 1.60 - 17")',
+                category: 'moto',
+                categoryLabel: 'Parts Motor',
+                price: 380,
+                retailPrice: 550,
+                condition: 9.0,
+                status: 'AVAILABLE',
+                specs: ['Y15ZR / Y16', 'Bebas Gelong', 'Siap Bearing'],
+                honestNote: 'Rim bebas gelong atau dent 100%, rumah bearing masih ketat. Warna gold original RCB masih berkilat, cuma ada kesan cungkil tayar halus kat bibir dalam (tak nampak bila dah sarung tayar).',
+                rfs: 'Motor dah masuk balik rim standard kilang.',
+                included: 'Sepasang rim depan belakang + bearing siap pasang + kotak RCB.',
+                image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'TECH-01',
+                title: 'iPhone 13 Pro 256GB (Sierra Blue) — MY Set',
+                category: 'tech',
+                categoryLabel: 'Tech & PC',
+                price: 2150,
+                retailPrice: 4899,
+                condition: 9.0,
+                status: 'AVAILABLE',
+                specs: ['256GB', 'BH 87% Ori', 'FaceID Laju'],
+                honestNote: 'MY Set original belum pernah buka atau repair. Battery Health 87% tahan sehari suntuk, FaceID & TrueTone cemerlang. Frame stainless steel tepi ada micro-scratches halus sebab pakai casing keras.',
+                rfs: 'Dah upgrade ke telefon baru.',
+                included: 'Fullset kotak asal + kabel USB-C ke Lightning ori + 2 casing MagSafe.',
+                image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'WEAR-01',
+                title: 'Nike Dunk Low Retro Black White (UK 8.5 / US 9.5)',
+                category: 'wear',
+                categoryLabel: 'Kasut & Baju',
+                price: 240,
+                retailPrice: 469,
+                condition: 9.0,
+                status: 'AVAILABLE',
+                specs: ['Saiz UK 8.5', '100% Original', 'Tapak 95%'],
+                honestNote: 'Beli sendiri kat butik Nike Mid Valley. Tapak bintang bawah masih tebal 95%, bahagian depan (toebox) ada crease lembut biasa sebab pakai jalan mall 4-5 kali sahaja. Dah siap cuci bersih.',
+                rfs: 'Nak kurangkan koleksi kasut kat rak.',
+                included: 'Sepasang kasut + Kotak Nike merah asal + kertas balut.',
+                image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'TECH-02',
+                title: 'Custom 75% Gasket Mechanical Keyboard (Lubed Switches)',
+                category: 'tech',
+                categoryLabel: 'Tech & PC',
+                price: 280,
+                retailPrice: 480,
+                condition: 9.5,
+                status: 'AVAILABLE',
+                specs: ['Hot-Swappable', 'Bunyi Thocky', 'Wireless / Wired'],
+                honestNote: 'Kondisi macam baru keluar kotak. Dah siap mod tape & pakai Akko Cream Yellow lubed switches + Double-shot PBT keycaps. Semua lampu RGB dan tombol rotary knob berfungsi lancar.',
+                rfs: 'Terlalu banyak keyboard atas meja kerja, nak clear bilik.',
+                included: 'Keyboard + Coiled Aviator Cable + Keycap puller + Kotak.',
+                image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'MOTO-02',
+                title: 'Ekzos Cutting Standard 28mm (Bunyi Sopan Padu)',
+                category: 'moto',
+                categoryLabel: 'Parts Motor',
+                price: 185,
+                retailPrice: 320,
+                condition: 8.5,
+                status: 'AVAILABLE',
+                specs: ['Manifold 28mm', 'Lepas Roadblock', 'Bebas Kemek'],
+                honestNote: 'Bunyi bass sedap tapi sopan, mesra jiran. Manifold stainless steel 28mm tiada kemek, perut ekzos dah cat hi-temp hitam matte semula supaya nampak kemas.',
+                rfs: 'Projek motor spec geli-geli dah pencen.',
+                included: 'Set ekzos penuh siap manifold + cover ekzos.',
+                image: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'WEAR-02',
+                title: 'Vintage Boxy Workwear Detroit Jacket (Saiz L)',
+                category: 'wear',
+                categoryLabel: 'Kasut & Baju',
+                price: 175,
+                retailPrice: 350,
+                condition: 8.5,
+                status: 'AVAILABLE',
+                specs: ['Pit 23.5"', 'Labuh 26.5"', 'Heavy Canvas'],
+                honestNote: 'Cutting boxy terletak elok bila sarung. Kain heavy duck canvas dah season & faded sekata (nampak rugged vintage), zip besi YKK lancar, tiada koyak atau kesan minyak.',
+                rfs: 'Jarang pakai sebab cuaca panas, almari dah penuh.',
+                included: 'Helai jaket siap basuh dobi wangi.',
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'TECH-03',
+                title: '24" Fast IPS 165Hz 1ms FHD Gaming Monitor',
+                category: 'tech',
+                categoryLabel: 'Tech & PC',
+                price: 390,
+                retailPrice: 689,
+                condition: 9.0,
+                status: 'AVAILABLE',
+                specs: ['165Hz IPS', '0 Dead Pixel', 'HDR Ready'],
+                honestNote: 'Dijamin zero dead pixel atau garis halus (boleh minta video test masa live). Warna IPS sangat tajam untuk gaming & editing. Kotak asal siap polisterin tebal masih ada untuk pos selamat.',
+                rfs: 'Dah tukar ke monitor 34 inci ultrawide.',
+                included: 'Monitor + Stand asal + Power adapter + Kabel DisplayPort 1.4 + Kotak.',
+                image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'MOTO-03',
+                title: 'Monoshock Heavy Duty Adjustable 205mm (Gas & Rebound)',
+                category: 'moto',
+                categoryLabel: 'Parts Motor',
+                price: 165,
+                retailPrice: 280,
+                condition: 9.0,
+                status: 'AVAILABLE',
+                specs: ['Bebas Leaking', 'Boleh Laras', 'Pakai 2 Bulan'],
+                honestNote: '100% bebas leaking minyak, rod tengah bersih berkilat. Klik pelaras rebound bawah berfungsi setiap takuk. Baru pakai tak sampai 2 bulan hujung minggu.',
+                rfs: 'Jual lerai sebab motor dah tolak kedai.',
+                included: 'Monoshock + kunci pelaras spring + kotak.',
+                image: 'https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'TECH-04',
+                title: 'Logitech G Pro X Superlight Wireless Mouse (White)',
+                category: 'tech',
+                categoryLabel: 'Tech & PC',
+                price: 260,
+                retailPrice: 649,
+                condition: 8.5,
+                status: 'SOLD',
+                specs: ['63 Gram', 'Bebas Double-Click', 'Tiger Ice Skates'],
+                honestNote: 'Switch klik kiri kanan bebas masalah double-click. Bateri tahan 2 minggu sekali cas. Dah siap tukar tapak Tiger Ice PTFE skates.',
+                rfs: 'Bertukar ke mouse ergonomic.',
+                included: 'Mouse + Dongle receiver + Kabel cas + Kotak.',
+                image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=900&q=80'
+            },
+            {
+                id: 'WEAR-03',
+                title: 'Casio G-Shock DW-5600BB All Black Matte Original',
+                category: 'wear',
+                categoryLabel: 'Kasut & Baju',
+                price: 180,
+                retailPrice: 395,
+                condition: 9.0,
+                status: 'SOLD',
+                specs: ['Original Marco', 'Cermin Bersih', 'Siap Tin'],
+                honestNote: 'Cermin bebas calar, lampu backlight terang, tali resin masih matte belum berkilat.',
+                rfs: 'Kemas kotak jam.',
+                included: 'Jam + Tin G-Shock + Kotak kertas.',
+                image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
+            }
+        ];
+
+        const DEFAULT_SETTINGS = {
+            storeName: 'GARASI.AKU',
+            sellerName: 'Aiman (Owner Koleksi)',
+            whatsapp: '60123456789',
+            codLocation: 'Rawang / Selayang / KL',
+            bankName: 'MAYBANK BERHAD',
+            bankAccount: '1621 0668 4412',
+            gatewayUrl: ''
+        };
+
+        // --- 2. APPLICATION STATE ---
+        let products = [];
+        let sellerSettings = {};
+        let cart = [];
+        let activeCategory = 'all';
+        let searchQuery = '';
+        let currentInspectedProduct = null;
+
+        // --- 3. INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStateFromStorage();
+            applySellerSettingsToUI();
+            renderCategories();
+            renderCatalog();
+            updateCartUI();
+        });
+
+        function loadStateFromStorage() {
+            try {
+                const savedProducts = localStorage.getItem('garasi_products_v1');
+                products = savedProducts ? JSON.parse(savedProducts) : [...DEFAULT_PRODUCTS];
+
+                const savedSettings = localStorage.getItem('garasi_settings_v1');
+                sellerSettings = savedSettings ? JSON.parse(savedSettings) : { ...DEFAULT_SETTINGS };
+
+                const savedCart = localStorage.getItem('garasi_cart_v1');
+                cart = savedCart ? JSON.parse(savedCart) : [];
+            } catch (e) {
+                products = [...DEFAULT_PRODUCTS];
+                sellerSettings = { ...DEFAULT_SETTINGS };
+                cart = [];
+            }
+        }
+
+        function saveProductsToStorage() {
+            try {
+                localStorage.setItem('garasi_products_v1', JSON.stringify(products));
+            } catch (e) {}
+        }
+
+        function saveCartToStorage() {
+            try {
+                localStorage.setItem('garasi_cart_v1', JSON.stringify(cart));
+            } catch (e) {}
+        }
+
+        function applySellerSettingsToUI() {
+            document.getElementById('headerStoreName').textContent = sellerSettings.storeName;
+            document.getElementById('sellerProfileName').textContent = sellerSettings.sellerName;
+            document.getElementById('topBarCodLocation').textContent = sellerSettings.codLocation;
+            document.getElementById('drawerCodArea').textContent = sellerSettings.codLocation;
+            document.getElementById('modalCodArea').textContent = sellerSettings.codLocation;
+
+            document.getElementById('duitnowBankName').textContent = sellerSettings.bankName;
+            document.getElementById('duitnowAccNumber').textContent = sellerSettings.bankAccount;
+            document.getElementById('duitnowAccHolder').textContent = sellerSettings.sellerName;
+
+            // Populate Studio Settings Form
+            document.getElementById('settingStoreName').value = sellerSettings.storeName;
+            document.getElementById('settingSellerName').value = sellerSettings.sellerName;
+            document.getElementById('settingWhatsapp').value = sellerSettings.whatsapp;
+            document.getElementById('settingCodLocation').value = sellerSettings.codLocation;
+            document.getElementById('settingBankName').value = sellerSettings.bankName;
+            document.getElementById('settingBankAccount').value = sellerSettings.bankAccount;
+            document.getElementById('settingGatewayUrl').value = sellerSettings.gatewayUrl || '';
+
+            // Update Stats
+            const availCount = products.filter(p => p.status === 'AVAILABLE').length;
+            const soldCount = products.filter(p => p.status === 'SOLD').length;
+            document.getElementById('statAvailableCount').textContent = availCount;
+            document.getElementById('statSoldCount').textContent = soldCount;
+        }
+
+        // --- 4. CATEGORY & CATALOG RENDERING ---
+        function renderCategories() {
+            const categories = [
+                { id: 'all', label: 'Semua Barang', icon: 'fa-layer-group' },
+                { id: 'moto', label: 'Parts Motor', icon: 'fa-motorcycle' },
+                { id: 'tech', label: 'Tech & PC', icon: 'fa-microchip' },
+                { id: 'wear', label: 'Kasut & Baju', icon: 'fa-shirt' }
+            ];
+
+            const container = document.getElementById('categoryFilterContainer');
+            container.innerHTML = categories.map(cat => {
+                const count = cat.id === 'all'
+                    ? products.length
+                    : products.filter(p => p.category === cat.id).length;
+                const isActive = activeCategory === cat.id;
+
+                return `
+                    <button 
+                        onclick="selectCategory('${cat.id}')"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap border ${
+                            isActive
+                                ? 'bg-charcoal text-white border-charcoal shadow-sm'
+                                : 'bg-white text-neutral-600 border-stoneborder hover:border-charcoal hover:text-charcoal'
+                        }"
+                    >
+                        <i class="fa-solid ${cat.icon} ${isActive ? 'text-emerald-400' : 'text-neutral-400'}"></i>
+                        <span>${cat.label}</span>
+                        <span class="mono-num text-[11px] px-1.5 py-0.2 rounded-md ${
+                            isActive ? 'bg-neutral-700 text-neutral-200' : 'bg-neutral-100 text-neutral-500'
+                        }">${count}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(catId) {
+            activeCategory = catId;
+            renderCategories();
+            renderCatalog();
+        }
+
+        function syncSearch(val) {
+            searchQuery = val.trim();
+            const dInput = document.getElementById('searchInputDesktop');
+            const mInput = document.getElementById('searchInputMobile');
+            const clearBtn = document.getElementById('clearSearchBtnDesktop');
+
+            if (dInput && dInput.value !== val) dInput.value = val;
+            if (mInput && mInput.value !== val) mInput.value = val;
+            if (clearBtn) {
+                clearBtn.classList.toggle('hidden', searchQuery.length === 0);
+            }
+            renderCatalog();
+        }
+
+        function resetFilters() {
+            activeCategory = 'all';
+            document.getElementById('showSoldToggle').checked = true;
+            document.getElementById('sortSelect').value = 'featured';
+            syncSearch('');
+            renderCategories();
+            renderCatalog();
+        }
+
+        function renderCatalog() {
+            const showSold = document.getElementById('showSoldToggle').checked;
+            const sortBy = document.getElementById('sortSelect').value;
+
+            let filtered = products.filter(item => {
+                const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
+                const matchesSold = showSold ? true : item.status === 'AVAILABLE';
+                const q = searchQuery.toLowerCase();
+                const matchesSearch = !q ||
+                    item.title.toLowerCase().includes(q) ||
+                    item.id.toLowerCase().includes(q) ||
+                    item.honestNote.toLowerCase().includes(q) ||
+                    item.categoryLabel.toLowerCase().includes(q);
+
+                return matchesCategory && matchesSold && matchesSearch;
+            });
+
+            // Sort items (Keep AVAILABLE before SOLD on default featured sort)
+            filtered.sort((a, b) => {
+                if (sortBy === 'price-asc') return a.price - b.price;
+                if (sortBy === 'price-desc') return b.price - a.price;
+                if (sortBy === 'condition-desc') return b.condition - a.condition;
+                // Default featured: Available first
+                if (a.status !== b.status) return a.status === 'AVAILABLE' ? -1 : 1;
+                return 0;
+            });
+
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyCatalogState');
+            const countDisplay = document.getElementById('catalogResultCount');
+
+            countDisplay.textContent = `Memaparkan ${filtered.length} daripada ${products.length} barang dalam koleksi`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => {
+                const isSold = item.status === 'SOLD';
+                const savings = Math.max(0, item.retailPrice - item.price);
+                const savingsPercent = item.retailPrice > 0 ? Math.round((savings / item.retailPrice) * 100) : 0;
+
+                return `
+                    <article class="bg-white border border-stoneborder rounded-2xl overflow-hidden flex flex-col justify-between card-hover ${isSold ? 'opacity-75' : ''}">
+                        <div>
+                            <!-- Product Image Box -->
+                            <div onclick="openInspectionModal('${item.id}')" class="relative aspect-[4/3] bg-neutral-100 overflow-hidden cursor-pointer group">
+                                <img 
+                                    src="${item.image}" 
+                                    alt="${item.title}" 
+                                    onerror="this.src='https://placehold.co/600x450/FAF9F6/111111?text=${encodeURIComponent(item.id)}'"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                >
+                                <!-- Top Badges -->
+                                <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                                    <span class="mono-num text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/95 backdrop-blur-sm text-charcoal border border-stoneborder shadow-sm">
+                                        #${item.id}
+                                    </span>
+                                    ${isSold ? `
+                                        <span class="mono-num text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-neutral-900 text-white uppercase">
+                                            SOLD OUT
+                                        </span>
+                                    ` : `
+                                        <span class="inline-flex items-center gap-1.5 mono-num text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-950/90 text-emerald-300 border border-emerald-500/40">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                                            AVAILABLE
+                                        </span>
+                                    `}
+                                </div>
+
+                                <!-- Bottom Overlay: Condition & Category -->
+                                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                                    <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-charcoal/85 text-white backdrop-blur-sm">
+                                        ${item.categoryLabel}
+                                    </span>
+                                    <span class="mono-num text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-white/95 text-charcoal border border-stoneborder">
+                                        Cond: ${item.condition.toFixed(1)}/10
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Card Content -->
+                            <div class="p-5 space-y-3">
+                                <div class="flex flex-wrap gap-1.5">
+                                    ${(item.specs || []).map(s => `
+                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-alabaster border border-stoneborder text-neutral-600">${s}</span>
+                                    `).join('')}
+                                </div>
+
+                                <h3 onclick="openInspectionModal('${item.id}')" class="font-extrabold text-base text-charcoal hover:text-emerald-700 cursor-pointer line-clamp-2 leading-snug transition">
+                                    ${item.title}
+                                </h3>
+
+                                <!-- Honest Preview Snippet -->
+                                <p class="text-xs text-neutral-600 line-clamp-2 leading-relaxed bg-alabaster p-2.5 rounded-xl border border-stoneborder">
+                                    <strong class="text-charcoal">Jujur cakap:</strong> ${item.honestNote}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer: Pricing & Buttons -->
+                        <div class="px-5 pb-5 pt-2 space-y-3">
+                            <div class="flex items-baseline justify-between pt-2 border-t border-stoneborder">
+                                <div>
+                                    <div class="text-[10px] uppercase font-bold text-neutral-400">Harga Preloved</div>
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="mono-num text-xl font-extrabold text-charcoal">RM ${item.price.toLocaleString()}</span>
+                                        <span class="mono-num text-xs text-neutral-400 line-through">RM ${item.retailPrice.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                                ${savingsPercent > 0 ? `
+                                    <span class="mono-num text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-lg">
+                                        Jimat ${savingsPercent}%
+                                    </span>
+                                ` : ''}
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <button 
+                                    onclick="openInspectionModal('${item.id}')"
+                                    class="py-2.5 px-3 rounded-xl border border-stoneborder bg-white hover:border-charcoal text-xs font-bold text-charcoal transition flex items-center justify-center gap-1.5"
+                                >
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span>Periksa Detail</span>
+                                </button>
+                                ${isSold ? `
+                                    <button disabled class="py-2.5 px-3 rounded-xl bg-neutral-200 text-neutral-500 text-xs font-bold cursor-not-allowed">
+                                        Dah Terjual
+                                    </button>
+                                ` : `
+                                    <button 
+                                        onclick="buyNowDirect('${item.id}')"
+                                        class="py-2.5 px-3 rounded-xl bg-charcoal hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
+                                    >
+                                        <i class="fa-solid fa-bolt text-amber-300"></i>
+                                        <span>Beli / Lock</span>
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // --- 5. PRODUCT INSPECTION MODAL ---
+        function openInspectionModal(productId) {
+            const item = products.find(p => p.id === productId);
+            if (!item) return;
+            currentInspectedProduct = item;
+
+            const savings = Math.max(0, item.retailPrice - item.price);
+            document.getElementById('modalSku').textContent = `#${item.id}`;
+            document.getElementById('modalCategoryBadge').textContent = item.categoryLabel;
+            document.getElementById('modalImage').src = item.image;
+            document.getElementById('modalImage').onerror = function() {
+                this.src = `https://placehold.co/600x600/FAF9F6/111111?text=${encodeURIComponent(item.id)}`;
+            };
+
+            const isSold = item.status === 'SOLD';
+            document.getElementById('modalStatusStamp').classList.toggle('hidden', !isSold);
+            document.getElementById('modalConditionScore').textContent = `${item.condition.toFixed(1)} / 10`;
+            document.getElementById('modalConditionBar').style.width = `${Math.min(100, item.condition * 10)}%`;
+
+            document.getElementById('modalSpecPills').innerHTML = (item.specs || []).map(s => `
+                <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-white border border-stoneborder text-charcoal">${s}</span>
+            `).join('');
+
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalPrice').textContent = `RM ${item.price.toLocaleString()}`;
+            document.getElementById('modalRetailPrice').textContent = `Harga Baru: RM ${item.retailPrice.toLocaleString()}`;
+            document.getElementById('modalSavingsBadge').textContent = `Jimat RM ${savings.toLocaleString()}`;
+            document.getElementById('modalHonestNote').textContent = item.honestNote;
+            document.getElementById('modalRfs').textContent = item.rfs;
+            document.getElementById('modalIncluded').textContent = item.included;
+            document.getElementById('modalCodArea').textContent = sellerSettings.codLocation;
+
+            const actionArea = document.getElementById('modalActionArea');
+            if (isSold) {
+                actionArea.innerHTML = `
+                    <div class="w-full p-3 rounded-xl bg-neutral-100 border border-stoneborder text-center text-xs font-bold text-neutral-500">
+                        Barang ini telah terjual (Rekod Arkib Kedai)
+                    </div>
+                `;
+            } else {
+                actionArea.innerHTML = `
+                    <button onclick="buyNowDirect('${item.id}'); closeInspectionModal();" class="flex-1 py-3 px-4 rounded-xl bg-charcoal hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition shadow-sm">
+                        <i class="fa-solid fa-bolt text-amber-300"></i>
+                        <span>Beli Terus (FPX / QR / COD)</span>
+                    </button>
+                    <button onclick="addToCart('${item.id}'); closeInspectionModal();" class="py-3 px-4 rounded-xl border border-stoneborder bg-white hover:border-charcoal text-xs sm:text-sm font-bold text-charcoal transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>Masukkan Beg</span>
+                    </button>
+                    <button onclick="askProductOnWhatsApp('${item.id}')" class="py-3 px-4 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span>Tanya</span>
+                    </button>
+                `;
+            }
+
+            const modal = document.getElementById('inspectionModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeInspectionModal() {
+            const modal = document.getElementById('inspectionModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // --- 6. SHOPPING BAG & CHECKOUT DRAWER ---
+        function addToCart(productId) {
+            const item = products.find(p => p.id === productId);
+            if (!item || item.status === 'SOLD') return;
+
+            if (cart.some(c => c.id === productId)) {
+                showToast('Barang ini sudah ada dalam Beg Belian kau.', 'info');
+                toggleCartDrawer(true);
+                return;
+            }
+
+            cart.push({
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                condition: item.condition,
+                image: item.image
+            });
+            saveCartToStorage();
+            updateCartUI();
+            showToast(`"${item.title}" ditambah ke Beg Belian!`, 'success');
+        }
+
+        function buyNowDirect(productId) {
+            const item = products.find(p => p.id === productId);
+            if (!item || item.status === 'SOLD') return;
+
+            if (!cart.some(c => c.id === productId)) {
+                cart.push({
+                    id: item.id,
+                    title: item.title,
+                    price: item.price,
+                    condition: item.condition,
+                    image: item.image
+                });
+                saveCartToStorage();
+                updateCartUI();
+            }
+            toggleCartDrawer(true);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(c => c.id !== productId);
+            saveCartToStorage();
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCartToStorage();
+            updateCartUI();
+        }
+
+        function toggleCartDrawer(open) {
+            const backdrop = document.getElementById('cartDrawerBackdrop');
+            if (open) {
+                updateCartUI();
+                backdrop.classList.remove('hidden');
+            } else {
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        function getSelectedDeliveryMethod() {
+            const selected = document.querySelector('input[name="deliveryMethod"]:checked');
+            return selected ? selected.value : 'pos_sm';
+        }
+
+        function getShippingCost() {
+            if (cart.length === 0) return 0;
+            const method = getSelectedDeliveryMethod();
+            if (method === 'pos_sm') return 10;
+            if (method === 'pos_ss') return 18;
+            return 0;
+        }
+
+        function updateCheckoutTotals() {
+            const method = getSelectedDeliveryMethod();
+            const addressLabel = document.getElementById('buyerAddressLabel');
+            const addressInput = document.getElementById('buyerAddress');
+
+            if (method === 'cod') {
+                addressLabel.textContent = `Lokasi & Masa Cadangan COD (${sellerSettings.codLocation}) *`;
+                addressInput.placeholder = 'Cth: Aeon Rawang / Petronas Selayang malam ni pukul 9:00pm...';
+            } else {
+                addressLabel.textContent = 'Alamat Penuh Pos (Beserta Poskod) *';
+                addressInput.placeholder = 'No. Rumah, Jalan, Taman, Poskod, Negeri...';
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const shipping = getShippingCost();
+            const total = subtotal + shipping;
+
+            document.getElementById('summarySubtotal').textContent = `RM ${subtotal.toLocaleString()}`;
+            document.getElementById('summaryShipping').textContent = shipping === 0 ? 'PERCUMA' : `RM ${shipping}`;
+            document.getElementById('summaryTotal').textContent = `RM ${total.toLocaleString()}`;
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartCountBadge').textContent = cart.length;
+            const listEl = document.getElementById('cartItemsList');
+            const formSection = document.getElementById('checkoutFormSection');
+            const clearBtn = document.getElementById('clearCartBtn');
+
+            if (cart.length === 0) {
+                listEl.innerHTML = `
+                    <div class="p-8 rounded-2xl bg-alabaster border border-stoneborder text-center space-y-2">
+                        <i class="fa-solid fa-bag-shopping text-2xl text-neutral-400"></i>
+                        <div class="text-xs font-bold text-charcoal">Beg Belian Masih Kosong</div>
+                        <p class="text-[11px] text-neutral-500">Pilih mana-mana barang preloved yang berkenan untuk teruskan.</p>
+                    </div>
+                `;
+                formSection.classList.add('hidden');
+                clearBtn.classList.add('hidden');
+            } else {
+                formSection.classList.remove('hidden');
+                clearBtn.classList.remove('hidden');
+                listEl.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-alabaster border border-stoneborder">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="${item.image}" alt="${item.title}" class="w-12 h-12 rounded-lg object-cover border border-stoneborder shrink-0">
+                            <div class="min-w-0">
+                                <div class="mono-num text-[10px] font-bold text-neutral-500">#${item.id} • Cond ${item.condition}/10</div>
+                                <div class="text-xs font-bold text-charcoal truncate">${item.title}</div>
+                                <div class="mono-num text-xs font-extrabold text-emerald-700">RM ${item.price.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="w-7 h-7 rounded-lg bg-white border border-stoneborder text-neutral-400 hover:text-rose-600 hover:border-rose-300 shrink-0">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            updateCheckoutTotals();
+        }
+
+        // --- 7. PAYMENT REDIRECT FLOWS (FPX, DUITNOW QR, WHATSAPP) ---
+        function validateBuyerForm() {
+            if (cart.length === 0) {
+                showToast('Beg belian kosong!', 'error');
+                return null;
+            }
+            const name = document.getElementById('buyerName').value.trim();
+            const phone = document.getElementById('buyerPhone').value.trim();
+            const address = document.getElementById('buyerAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                showToast('Sila lengkapkan Nama, No. WhatsApp & Alamat/Lokasi COD terlebih dahulu.', 'error');
+                return null;
+            }
+
+            const method = getSelectedDeliveryMethod();
+            const methodLabel = method === 'pos_sm'
+                ? 'Pos J&T/PosLaju (Semenanjung - RM10)'
+                : method === 'pos_ss'
+                ? 'Pos J&T/PosLaju (Sabah/Sarawak - RM18)'
+                : `Self-Collect / COD (${sellerSettings.codLocation} - PERCUMA)`;
+
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const shipping = getShippingCost();
+            const total = subtotal + shipping;
+            const orderRef = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+
+            return {
+                orderRef,
+                name,
+                phone,
+                address,
+                method,
+                methodLabel,
+                subtotal,
+                shipping,
+                total,
+                bank: document.getElementById('fpxBankSelect').value
+            };
+        }
+
+        let activeOrderContext = null;
+
+        function initiatePaymentRedirect(channel) {
+            const details = validateBuyerForm();
+            if (!details) return;
+            activeOrderContext = details;
+
+            if (channel === 'fpx') {
+                openFpxGatewayModal(details);
+            } else if (channel === 'duitnow') {
+                openDuitNowModal(details);
+            } else if (channel === 'whatsapp') {
+                redirectOrderToWhatsApp(details, 'LOCK BARANG / BAYAR MELALUI WHATSAPP');
+            }
+        }
+
+        function openFpxGatewayModal(details) {
+            const modal = document.getElementById('fpxGatewayModal');
+            const loadingState = document.getElementById('fpxConnectingState');
+            const readyState = document.getElementById('fpxReadyState');
+
+            document.getElementById('fpxLoadingBankName').textContent = details.bank;
+            document.getElementById('fpxBillCode').textContent = `TP-${details.orderRef}`;
+            document.getElementById('fpxSelectedBankDisplay').textContent = details.bank;
+            document.getElementById('fpxBuyerDisplay').textContent = `${details.name} (${details.phone})`;
+            document.getElementById('fpxAmountDisplay').textContent = `RM ${details.total.toFixed(2)}`;
+
+            // Check if seller configured an external ToyyibPay/Billplz URL
+            const customBox = document.getElementById('customGatewayBox');
+            const customAnchor = document.getElementById('customGatewayAnchor');
+            if (sellerSettings.gatewayUrl && sellerSettings.gatewayUrl.trim() !== '') {
+                customBox.classList.remove('hidden');
+                customAnchor.href = sellerSettings.gatewayUrl.trim();
+                customAnchor.textContent = sellerSettings.gatewayUrl.trim();
+            } else {
+                customBox.classList.add('hidden');
+            }
+
+            loadingState.classList.remove('hidden');
+            readyState.classList.add('hidden');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            setTimeout(() => {
+                loadingState.classList.add('hidden');
+                readyState.classList.remove('hidden');
+            }, 950);
+        }
+
+        function completeFpxTransaction() {
+            if (!activeOrderContext) return;
+            showToast('Bayaran FPX disahkan! Membuka WhatsApp bersama resit rasmi...', 'success');
+            redirectOrderToWhatsApp(activeOrderContext, `TELAH DIBAYAR MELALUI FPX (${activeOrderContext.bank}) - RUJUKAN: TP-${activeOrderContext.orderRef}`);
+            closePaymentModals();
+        }
+
+        function openDuitNowModal(details) {
+            document.getElementById('duitnowAmountDisplay').textContent = `RM ${details.total.toFixed(2)}`;
+            const modal = document.getElementById('duitnowModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function completeDuitNowTransfer() {
+            if (!activeOrderContext) return;
+            showToast('Membuka WhatsApp untuk hantar bukti resit DuitNow QR...', 'success');
+            redirectOrderToWhatsApp(activeOrderContext, `SUDAH TRANSFER DUITNOW QR (${sellerSettings.bankName}) - RUJUKAN: ${activeOrderContext.orderRef}`);
+            closePaymentModals();
+        }
+
+        function closePaymentModals() {
+            document.getElementById('fpxGatewayModal').classList.add('hidden');
+            document.getElementById('fpxGatewayModal').classList.remove('flex');
+            document.getElementById('duitnowModal').classList.add('hidden');
+            document.getElementById('duitnowModal').classList.remove('flex');
+        }
+
+        function redirectOrderToWhatsApp(details, paymentStatusHeader) {
+            const itemLines = cart.map((item, idx) => `${idx + 1}. [${item.id}] ${item.title} — RM ${item.price}`).join('\n');
+
+            const message = [
+                `*ORDER BARU DARI WEBSITE ${sellerSettings.storeName}*`,
+                `No. Order: *#${details.orderRef}*`,
+                `Status Bayaran: *${paymentStatusHeader}*`,
+                `----------------------------------`,
+                `*SENARAI BARANG:*`,
+                itemLines,
+                `----------------------------------`,
+                `Subtotal: RM ${details.subtotal}`,
+                `Penghantaran: ${details.methodLabel}`,
+                `*JUMLAH KESELURUHAN: RM ${details.total}*`,
+                `----------------------------------`,
+                `*MAKLUMAT PEMBELI:*`,
+                `Nama: ${details.name}`,
+                `No. Tel: ${details.phone}`,
+                `Alamat / Lokasi COD: ${details.address}`
+            ].join('\n');
+
+            const cleanPhone = (sellerSettings.whatsapp || '60123456789').replace(/[^0-9]/g, '');
+            const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function askProductOnWhatsApp(productId) {
+            const item = products.find(p => p.id === productId);
+            if (!item) return;
+            const cleanPhone = (sellerSettings.whatsapp || '60123456789').replace(/[^0-9]/g, '');
+            const text = `Salam bro, saya tengok kat website *${sellerSettings.storeName}* tadi. Barang *[${item.id}] ${item.title} (RM ${item.price})* ni masih available ke?`;
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function openGeneralWhatsApp() {
+            const cleanPhone = (sellerSettings.whatsapp || '60123456789').replace(/[^0-9]/g, '');
+            const text = `Salam bro, saya singgah website preloved *${sellerSettings.storeName}* ni. Nak tanya pasal barang...`;
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function copyBankAccount() {
+            const acc = sellerSettings.bankAccount;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = acc.replace(/\s+/g, '');
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(`No. Akaun (${acc}) berjaya disalin!`, 'success');
+        }
+
+        // --- 8. SELLER STUDIO (ADMIN MODE) ---
+        function openSellerStudio() {
+            renderStudioInventoryList();
+            applySellerSettingsToUI();
+            const modal = document.getElementById('sellerStudioModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeSellerStudio() {
+            const modal = document.getElementById('sellerStudioModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function switchStudioTab(tabName) {
+            const tabs = ['inventory', 'add', 'settings'];
+            tabs.forEach(t => {
+                const content = document.getElementById('studioTab' + t.charAt(0).toUpperCase() + t.slice(1));
+                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (t === tabName) {
+                    content.classList.remove('hidden');
+                    btn.classList.add('border-charcoal', 'text-charcoal');
+                    btn.classList.remove('border-transparent', 'text-neutral-500');
+                } else {
+                    content.classList.add('hidden');
+                    btn.classList.remove('border-charcoal', 'text-charcoal');
+                    btn.classList.add('border-transparent', 'text-neutral-500');
+                }
+            });
+        }
+
+        function renderStudioInventoryList() {
+            document.getElementById('studioTotalItemsCount').textContent = products.length;
+            const container = document.getElementById('studioInventoryList');
+
+            container.innerHTML = products.map(item => {
+                const isSold = item.status === 'SOLD';
+                return `
+                    <div class="p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-alabaster transition">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="${item.image}" alt="" class="w-11 h-11 rounded-lg object-cover border border-stoneborder shrink-0">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <span class="mono-num text-[10px] font-bold px-1.5 py-0.5 rounded bg-neutral-200 text-charcoal">#${item.id}</span>
+                                    <span class="text-xs font-bold text-charcoal truncate">${item.title}</span>
+                                </div>
+                                <div class="mono-num text-xs text-neutral-500">RM ${item.price} • Cond ${item.condition}/10 • ${item.categoryLabel}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button 
+                                onclick="toggleProductStatus('${item.id}')"
+                                class="px-3 py-1.5 rounded-lg text-xs font-bold border transition ${
+                                    isSold
+                                        ? 'bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100'
+                                        : 'bg-emerald-50 border-emerald-300 text-emerald-900 hover:bg-emerald-100'
+                                }"
+                            >
+                                ${isSold ? 'Tanda AVAILABLE Semula' : 'Tanda SOLD'}
+                            </button>
+                            <button onclick="deleteProductItem('${item.id}')" class="w-8 h-8 rounded-lg border border-stoneborder text-neutral-400 hover:text-rose-600 hover:border-rose-300">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleProductStatus(productId) {
+            const item = products.find(p => p.id === productId);
+            if (!item) return;
+            item.status = item.status === 'AVAILABLE' ? 'SOLD' : 'AVAILABLE';
+
+            if (item.status === 'SOLD') {
+                cart = cart.filter(c => c.id !== productId);
+                saveCartToStorage();
+            }
+
+            saveProductsToStorage();
+            renderStudioInventoryList();
+            renderCatalog();
+            applySellerSettingsToUI();
+            updateCartUI();
+            showToast(`Status #${item.id} ditukar ke ${item.status}!`, 'success');
+        }
+
+        function deleteProductItem(productId) {
+            products = products.filter(p => p.id !== productId);
+            cart = cart.filter(c => c.id !== productId);
+            saveProductsToStorage();
+            saveCartToStorage();
+            renderStudioInventoryList();
+            renderCategories();
+            renderCatalog();
+            applySellerSettingsToUI();
+            updateCartUI();
+            showToast(`Barang #${productId} telah dipadam.`, 'info');
+        }
+
+        function handleAddNewItem(e) {
+            e.preventDefault();
+            const cat = document.getElementById('newItemCategory').value;
+            const catLabels = { moto: 'Parts Motor', tech: 'Tech & PC', wear: 'Kasut & Baju' };
+            const defaultImages = {
+                moto: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80',
+                tech: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80',
+                wear: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=900&q=80'
+            };
+
+            const prefix = cat.toUpperCase();
+            const randomNum = Math.floor(10 + Math.random() * 89);
+            const newItem = {
+                id: `${prefix}-${randomNum}`,
+                title: document.getElementById('newItemTitle').value.trim(),
+                category: cat,
+                categoryLabel: catLabels[cat] || 'Random Preloved',
+                price: Number(document.getElementById('newItemPrice').value),
+                retailPrice: Number(document.getElementById('newItemRetail').value),
+                condition: Number(document.getElementById('newItemCondition').value),
+                status: 'AVAILABLE',
+                specs: ['Koleksi Peribadi', 'Gambar Sebenar', 'Ready Stock'],
+                honestNote: document.getElementById('newItemHonest').value.trim(),
+                rfs: document.getElementById('newItemRfs').value.trim(),
+                included: document.getElementById('newItemIncluded').value.trim(),
+                image: document.getElementById('newItemImage').value.trim() || defaultImages[cat]
+            };
+
+            products.unshift(newItem);
+            saveProductsToStorage();
+            e.target.reset();
+            renderStudioInventoryList();
+            renderCategories();
+            renderCatalog();
+            applySellerSettingsToUI();
+            switchStudioTab('inventory');
+            showToast(`"${newItem.title}" berjaya dimasukkan ke kedai!`, 'success');
+        }
+
+        function saveSellerSettings(e) {
+            e.preventDefault();
+            sellerSettings = {
+                storeName: document.getElementById('settingStoreName').value.trim() || 'GARASI.AKU',
+                sellerName: document.getElementById('settingSellerName').value.trim() || 'Owner Koleksi',
+                whatsapp: document.getElementById('settingWhatsapp').value.trim() || '60123456789',
+                codLocation: document.getElementById('settingCodLocation').value.trim() || 'Rawang / KL',
+                bankName: document.getElementById('settingBankName').value.trim() || 'MAYBANK BERHAD',
+                bankAccount: document.getElementById('settingBankAccount').value.trim() || '1621 0668 4412',
+                gatewayUrl: document.getElementById('settingGatewayUrl').value.trim()
+            };
+            try {
+                localStorage.setItem('garasi_settings_v1', JSON.stringify(sellerSettings));
+            } catch (err) {}
+            applySellerSettingsToUI();
+            renderCatalog();
+            showToast('Tetapan kedai & payment berjaya disimpan!', 'success');
+        }
+
+        function exportInventoryJson() {
+            const dataStr = JSON.stringify(products, null, 2);
+            const temp = document.createElement('textarea');
+            temp.value = dataStr;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('Data JSON semua stok telah disalin ke clipboard!', 'success');
+        }
+
+        function resetDemoInventory() {
+            products = [...DEFAULT_PRODUCTS];
+            saveProductsToStorage();
+            renderStudioInventoryList();
+            renderCategories();
+            renderCatalog();
+            applySellerSettingsToUI();
+            showToast('Data stok asal telah dipulihkan!', 'info');
+        }
+
+        // --- 9. TOAST NOTIFICATION HELPER ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-charcoal text-white border-emerald-500',
+                error: 'bg-rose-950 text-white border-rose-500',
+                info: 'bg-neutral-800 text-white border-neutral-500'
+            };
+            const icons = {
+                success: 'fa-circle-check text-emerald-400',
+                error: 'fa-circle-exclamation text-rose-400',
+                info: 'fa-circle-info text-sky-400'
+            };
+
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl border-l-4 shadow-xl text-xs font-semibold transition-all duration-300 ${colors[type]}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icons[type]} text-sm"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(8px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+    </script>
+</body>
+</html>
